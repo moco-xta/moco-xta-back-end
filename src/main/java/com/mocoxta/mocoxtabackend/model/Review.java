@@ -23,28 +23,28 @@ public class Review {
     private String email;
     private String role;
     private String review;
-    private Integer numberOfStars;
+    private Integer rating;
     private LocalDate date;
 
     public Review() {
     }
 
-    public Review(String name, String email, String role, String review, Integer number_of_stars, LocalDate date) {
+    public Review(String name, String email, String role, String review, Integer rating, LocalDate date) {
         this.name = name;
         this.email = email;
         this.role = role;
         this.review = review;
-        this.numberOfStars = number_of_stars;
+        this.rating = rating;
         this.date = date;
     }
 
-    public Review(Long id, String name, String email, String role, String review, Integer number_of_stars, LocalDate date) {
+    public Review(Long id, String name, String email, String role, String review, Integer rating, LocalDate date) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.role = role;
         this.review = review;
-        this.numberOfStars = number_of_stars;
+        this.rating = rating;
         this.date = date;
     }
 
@@ -88,12 +88,12 @@ public class Review {
         this.review = review;
     }
 
-    public Integer getNumberOfStars() {
-        return numberOfStars;
+    public Integer getRating() {
+        return rating;
     }
 
-    public void setNumberOfStars(Integer numberOfStars) {
-        this.numberOfStars = numberOfStars;
+    public void setRating(Integer rating) {
+        this.rating = rating;
     }
 
     public LocalDate getDate() {
@@ -112,7 +112,7 @@ public class Review {
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
                 ", review='" + review + '\'' +
-                ", number_of_stars=" + numberOfStars +
+                ", rating=" + rating +
                 ", date=" + date +
                 '}';
     }
