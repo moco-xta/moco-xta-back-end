@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://moco-xta.com", maxAge = 3600)
+@CrossOrigin(origins = "https://127.0.0.1", maxAge = 3600)
+/* @CrossOrigin(origins = "http://localhost:3000") */
 @RestController
 @RequestMapping(path = "api/v1/review")
 public class ReviewController {
