@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "https://moco-xta.com", maxAge = 3600)
 @RestController
 @RequestMapping(path = "api/v1/review")
 public class ReviewController {
