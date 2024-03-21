@@ -13,7 +13,7 @@ public class MocoXtaBackEndApplication {
 		SpringApplication.run(MocoXtaBackEndApplication.class, args);
 	}
 
-	/* @Bean
+	@Bean
 	public WebMvcConfigurer configure() {
 		return new WebMvcConfigurer() {
 			@Override
@@ -21,6 +21,6 @@ public class MocoXtaBackEndApplication {
 				registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE", "OPTIONS");
 			}
 		};
-	} */
+	}
 
 }
