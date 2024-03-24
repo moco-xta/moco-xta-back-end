@@ -1,7 +1,7 @@
-package com.mocoxta.mocoxtabackend.service;
+package com.mocoxta.mocoxtabackend.services;
 
-import com.mocoxta.mocoxtabackend.model.Test;
-import com.mocoxta.mocoxtabackend.repository.TestRepository;
+import com.mocoxta.mocoxtabackend.models.Test;
+import com.mocoxta.mocoxtabackend.repositories.TestRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

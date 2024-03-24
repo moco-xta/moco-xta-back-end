@@ -1,7 +1,7 @@
-package com.mocoxta.mocoxtabackend.controller;
+package com.mocoxta.mocoxtabackend.controllers;
 
-import com.mocoxta.mocoxtabackend.model.Review;
-import com.mocoxta.mocoxtabackend.service.ReviewService;
+import com.mocoxta.mocoxtabackend.models.Review;
+import com.mocoxta.mocoxtabackend.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

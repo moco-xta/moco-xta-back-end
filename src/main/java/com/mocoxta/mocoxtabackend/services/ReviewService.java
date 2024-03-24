@@ -1,7 +1,7 @@
-package com.mocoxta.mocoxtabackend.service;
+package com.mocoxta.mocoxtabackend.services;
 
-import com.mocoxta.mocoxtabackend.model.Review;
-import com.mocoxta.mocoxtabackend.repository.ReviewRepository;
+import com.mocoxta.mocoxtabackend.models.Review;
+import com.mocoxta.mocoxtabackend.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

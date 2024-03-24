@@ -1,4 +1,4 @@
-package com.mocoxta.mocoxtabackend.model;
+package com.mocoxta.mocoxtabackend.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
