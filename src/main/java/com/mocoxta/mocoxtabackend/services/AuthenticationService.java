@@ -1,9 +1,6 @@
 package com.mocoxta.mocoxtabackend.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mocoxta.mocoxtabackend.auth.AuthenticationRequest;
-import com.mocoxta.mocoxtabackend.auth.AuthenticationResponse;
-import com.mocoxta.mocoxtabackend.models.RegisterRequest;
 import com.mocoxta.mocoxtabackend.config.JwtService;
 import com.mocoxta.mocoxtabackend.enums.TokenType;
 import com.mocoxta.mocoxtabackend.models.Token;
@@ -30,7 +27,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public Token.AuthenticationResponse signUp(com.mocoxta.mocoxtabackend.models.SignInRequest request) {
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -42,12 +39,12 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.builder()
+        return Token.AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .build();
     }
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public Token.AuthenticationResponse authenticate(Token.SignInRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -60,7 +57,7 @@ public class AuthenticationService {
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
-        return AuthenticationResponse.builder()
+        return Token.AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .build();
@@ -107,7 +104,7 @@ public class AuthenticationService {
                 var accessToken = jwtService.generateToken(user);
                 revokeAllUserTokens(user);
                 saveUserToken(user, accessToken);
-                var authResponse = AuthenticationResponse.builder()
+                var authResponse = Token.AuthenticationResponse.builder()
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
                         .build();

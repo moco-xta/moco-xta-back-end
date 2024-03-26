@@ -1,5 +1,6 @@
 package com.mocoxta.mocoxtabackend.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mocoxta.mocoxtabackend.enums.TokenType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,4 +40,26 @@ public class Token {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     public User user;
+
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class SignInRequest {
+
+        private String email;
+        String password;
+    }
+
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class AuthenticationResponse {
+
+        @JsonProperty("access_token")
+        private String accessToken;
+        @JsonProperty("refresh_token")
+        private String refreshToken;
+    }
 }
