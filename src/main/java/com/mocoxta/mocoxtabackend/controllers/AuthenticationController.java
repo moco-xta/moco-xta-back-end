@@ -37,4 +37,10 @@ public class AuthenticationController {
     ) throws IOException {
         authenticationService.refreshToken(request, response);
     }
+    @PostMapping("/log_out")
+    public ResponseEntity<Token.LogOutResponse> logOut(
+            @RequestBody Token.LogOutRequest request
+    ) {
+        return ResponseEntity.ok(authenticationService.logOut(request));
+    }
 }

@@ -62,4 +62,24 @@ public class Token {
         @JsonProperty("refresh_token")
         private String refreshToken;
     }
+
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class LogOutRequest {
+
+        @JsonProperty("access_token")
+        private String accessToken;
+    }
+
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class LogOutResponse {
+
+        @JsonProperty("status")
+        private String status;
+    }
 }

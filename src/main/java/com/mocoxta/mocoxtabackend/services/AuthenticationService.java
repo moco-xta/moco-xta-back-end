@@ -3,6 +3,8 @@ package com.mocoxta.mocoxtabackend.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mocoxta.mocoxtabackend.config.JwtService;
 import com.mocoxta.mocoxtabackend.enums.TokenType;
+import com.mocoxta.mocoxtabackend.exceptions.EmailAlreadyExistsException;
+import com.mocoxta.mocoxtabackend.models.Test;
 import com.mocoxta.mocoxtabackend.models.Token;
 import com.mocoxta.mocoxtabackend.models.User;
 import com.mocoxta.mocoxtabackend.repositories.TokenRepository;
@@ -17,17 +19,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     public Token.AuthenticationResponse signUp(com.mocoxta.mocoxtabackend.models.SignInRequest request) {
+        if(userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new EmailAlreadyExistsException("Email \"" + request.getEmail() + "\" already used.");
+        }
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -35,7 +41,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .build();
-        var savedUser = repository.save(user);
+        var savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUser, jwtToken);
@@ -51,7 +57,7 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = repository.findByEmail(request.getEmail())
+        var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
@@ -60,6 +66,22 @@ public class AuthenticationService {
         return Token.AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .build();
+    }
+
+    public Token.LogOutResponse logOut(Token.LogOutRequest request) {
+        String token = request.getAccessToken();
+        /* String userEmail = jwtService.extractUsername(token);
+        if(userRepository.findByEmail(userEmail).isPresent()) {
+            throw new EmailAlreadyExistsException("User with email \"" + userEmail + "\" does not exist.");
+        }
+        if(tokenRepository.findByToken(token).isPresent()) {
+            throw new EmailAlreadyExistsException("Token does not exist.");
+        } */
+        Optional<Token> test = tokenRepository.findByToken(token);
+        tokenRepository.deleteById(test.get().id);
+        return Token.LogOutResponse.builder()
+                .status("You have been logged out")
                 .build();
     }
 
@@ -98,7 +120,7 @@ public class AuthenticationService {
         refreshToken = authHeader.substring(7);
         userEmail = jwtService.extractUsername(refreshToken);
         if (userEmail != null) {
-            var user = this.repository.findByEmail(userEmail)
+            var user = this.userRepository.findByEmail(userEmail)
                     .orElseThrow();
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accessToken = jwtService.generateToken(user);

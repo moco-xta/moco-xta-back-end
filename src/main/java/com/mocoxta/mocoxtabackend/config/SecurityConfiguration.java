@@ -23,6 +23,7 @@ public class SecurityConfiguration {
 
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
             new AntPathRequestMatcher("/api/v1/authentication/**"),
+            new AntPathRequestMatcher("/api/v1/review/reviews_list"),
             new AntPathRequestMatcher("/api/v1/review/reviews_list")
     );
 
