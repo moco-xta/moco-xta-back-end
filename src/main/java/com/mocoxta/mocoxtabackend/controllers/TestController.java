@@ -1,7 +1,7 @@
-package com.mocoxta.mocoxtabackend.controller;
+package com.mocoxta.mocoxtabackend.controllers;
 
-import com.mocoxta.mocoxtabackend.model.Test;
-import com.mocoxta.mocoxtabackend.service.TestService;
+import com.mocoxta.mocoxtabackend.models.Test;
+import com.mocoxta.mocoxtabackend.services.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
