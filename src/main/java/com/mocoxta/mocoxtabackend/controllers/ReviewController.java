@@ -4,6 +4,7 @@ import com.mocoxta.mocoxtabackend.models.Review;
 import com.mocoxta.mocoxtabackend.services.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,13 +17,16 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping("/reviews_list")
-    public List<Review> getTests() {
-        return reviewService.getReviews();
+    public ResponseEntity<List<Review>> getTests() {
+
+        return ResponseEntity.ok(reviewService.getReviews());
     }
 
     @PostMapping("/add_review")
-    public void addReview(@RequestBody Review review) {
-        reviewService.addReview(review);
+    public ResponseEntity<Review.ReviewResponse> addReview(@RequestBody Review.ReviewRequest reviewRequest, @RequestHeader (name="Authorization") String token) {
+
+        Review.ReviewResponse reviewResponse = reviewService.addReview(reviewRequest, token);
+        return ResponseEntity.ok(reviewResponse);
     };
 
     @DeleteMapping(path = "/delete_review/{id}")

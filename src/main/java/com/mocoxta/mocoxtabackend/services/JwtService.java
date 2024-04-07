@@ -1,5 +1,7 @@
-package com.mocoxta.mocoxtabackend.config;
+package com.mocoxta.mocoxtabackend.services;
 
+import com.mocoxta.mocoxtabackend.models.User;
+import com.mocoxta.mocoxtabackend.repositories.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -11,12 +13,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
+
+    private final UserRepository userRepository;
 
     @Value("${application.security.jwt.secret-key}")
     private String secretKey;
@@ -24,6 +30,25 @@ public class JwtService {
     private long jwtExpiration;
     @Value("${application.security.jwt.refresh-token.expiration}")
     private long refreshExpiration;
+
+    public User extractUser(String token) {
+        User user = userRepository.findByEmail(extractUsername(token.replace("Bearer ","")))
+                .orElseThrow();
+        return user;
+    }
+
+    public User.UserData extractUserData(String token) {
+        User user = userRepository.findByEmail(extractUsername(token.replace("Bearer ","")))
+                .orElseThrow();
+        User.UserData userData = User.UserData.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .build();
+        return userData;
+    }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
