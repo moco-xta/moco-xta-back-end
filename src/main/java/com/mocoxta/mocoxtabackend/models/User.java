@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     @Column(nullable = false)
     private String firstName;
     @Column(nullable = false)
@@ -35,6 +36,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToOne
+    @JoinColumn(name = "fk_review_id")
+    private Review review;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -69,5 +73,17 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class UserData {
+
+        private String firstName;
+        private String lastName;
+        private String email;
+        private Role role;
     }
 }

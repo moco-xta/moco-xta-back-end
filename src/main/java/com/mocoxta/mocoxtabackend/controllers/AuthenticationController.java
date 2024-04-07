@@ -1,5 +1,8 @@
 package com.mocoxta.mocoxtabackend.controllers;
 
+import com.mocoxta.mocoxtabackend.models.AuthenticationResponse;
+import com.mocoxta.mocoxtabackend.models.SignInRequest;
+import com.mocoxta.mocoxtabackend.models.SignUpRequest;
 import com.mocoxta.mocoxtabackend.models.Token;
 import com.mocoxta.mocoxtabackend.services.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,14 +21,14 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/sign_up")
-    public ResponseEntity<Token.AuthenticationResponse> signUp(
-            @RequestBody com.mocoxta.mocoxtabackend.models.SignInRequest request
+    public ResponseEntity<AuthenticationResponse> signUp(
+            @RequestBody SignUpRequest request
     ) {
         return ResponseEntity.ok(authenticationService.signUp(request));
     }
     @PostMapping("/sign_in")
-    public ResponseEntity<Token.AuthenticationResponse> signIn(
-            @RequestBody Token.SignInRequest request
+    public ResponseEntity<AuthenticationResponse> signIn(
+            @RequestBody SignInRequest request
     ) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }

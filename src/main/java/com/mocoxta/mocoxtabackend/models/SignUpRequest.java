@@ -1,5 +1,6 @@
 package com.mocoxta.mocoxtabackend.models;
 
+import com.mocoxta.mocoxtabackend.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,8 +10,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SignInRequest {
+public class SignUpRequest {
 
+    private String firstName;
+    private String lastName;
     private String email;
-    String password;
+    private String password;
+    private Role role;
 }

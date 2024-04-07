@@ -19,10 +19,41 @@ public class Review {
     @Id
     @GeneratedValue
     private Long id;
-    private String name;
-    private String email;
-    private String role;
+    @Column(nullable = false)
     private String review;
-    private Integer numberOfStars;
+    @Column(nullable = false)
+    private String role;
+    @Column(nullable = false)
+    private Integer rating;
+    @Column(nullable = false)
     private LocalDate date;
+    @OneToOne
+    @JoinColumn(name = "fk_user_id")
+    private User user;
+
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ReviewRequest {
+
+        private String review;
+        private String role;
+        private Integer rating;
+        private LocalDate date;
+    }
+
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ReviewResponse {
+
+        private Long id;
+        private String review;
+        private String role;
+        private Integer rating;
+        private LocalDate date;
+        private String firstName;
+    }
 }

@@ -1,5 +1,6 @@
 package com.mocoxta.mocoxtabackend.config;
 
+import com.mocoxta.mocoxtabackend.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
