@@ -17,7 +17,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping("/reviews_list")
-    public ResponseEntity<List<Review>> getTests() {
+    public ResponseEntity<List<Review.ReviewResponse>> getReviews() {
 
         return ResponseEntity.ok(reviewService.getReviews());
     }

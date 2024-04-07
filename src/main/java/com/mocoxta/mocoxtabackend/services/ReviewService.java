@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,8 +18,21 @@ public class ReviewService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
-    public List<Review> getReviews() {
-        return reviewRepository.findAll();
+    public List<Review.ReviewResponse> getReviews() {
+        List<Review> reviews = reviewRepository.findAll();
+        List<Review.ReviewResponse> ReviewsResponse = reviews.stream().map(review -> {
+            User user = userRepository.getReferenceById(review.getUser().getId());
+            Review.ReviewResponse reviewResponse = Review.ReviewResponse.builder()
+                    .id(review.getId())
+                    .review(review.getReview())
+                    .role(review.getRole())
+                    .rating(review.getRating())
+                    .date(review.getDate())
+                    .firstName(user.getFirstName())
+                    .build();
+            return reviewResponse;
+        }).collect(Collectors.toList());;
+        return ReviewsResponse;
     }
 
     public Review.ReviewResponse addReview(Review.ReviewRequest reviewRequest, String token) {
@@ -40,7 +54,7 @@ public class ReviewService {
                 .role(savedReview.getRole())
                 .rating(savedReview.getRating())
                 .date(savedReview.getDate())
-                .userData(userData)
+                .firstName(userData.getFirstName())
                 .build();
         return reviewResponse;
     }

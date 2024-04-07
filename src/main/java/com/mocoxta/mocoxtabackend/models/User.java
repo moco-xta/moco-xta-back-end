@@ -81,7 +81,6 @@ public class User implements UserDetails {
     @NoArgsConstructor
     public static class UserData {
 
-        private Long id;
         private String firstName;
         private String lastName;
         private String email;

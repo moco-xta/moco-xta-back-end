@@ -54,6 +54,6 @@ public class Review {
         private String role;
         private Integer rating;
         private LocalDate date;
-        private User.UserData userData;
+        private String firstName;
     }
 }

@@ -41,7 +41,6 @@ public class JwtService {
         User user = userRepository.findByEmail(extractUsername(token.replace("Bearer ","")))
                 .orElseThrow();
         User.UserData userData = User.UserData.builder()
-                .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
