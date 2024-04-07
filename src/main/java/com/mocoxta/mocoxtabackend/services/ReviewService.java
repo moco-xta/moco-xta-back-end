@@ -30,7 +30,7 @@ public class ReviewService {
                     .date(review.getDate())
                     .firstName(user.getFirstName())
                     .build();
-            return reviewResponse;
+            return setReviewResponse(review, user);
         }).collect(Collectors.toList());;
         return ReviewsResponse;
     }
@@ -47,14 +47,17 @@ public class ReviewService {
         Review savedReview = reviewRepository.save(review);
         user.setReview(savedReview);
         userRepository.save(user);
-        User.UserData userData = jwtService.extractUserData(token);
+        return setReviewResponse(savedReview, user);
+    }
+
+    private Review.ReviewResponse setReviewResponse(Review review, User user) {
         Review.ReviewResponse reviewResponse = Review.ReviewResponse.builder()
-                .id(savedReview.getId())
-                .review(savedReview.getReview())
-                .role(savedReview.getRole())
-                .rating(savedReview.getRating())
-                .date(savedReview.getDate())
-                .firstName(userData.getFirstName())
+                .id(review.getId())
+                .review(review.getReview())
+                .role(review.getRole())
+                .rating(review.getRating())
+                .date(review.getDate())
+                .firstName(user.getFirstName())
                 .build();
         return reviewResponse;
     }
