@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/moco_xta_db
-    username: postgres
-    password: 1234
+    username: moco
+    password: MDPpostgres2024
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
